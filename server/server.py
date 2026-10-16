@@ -306,7 +306,7 @@ class VoicePipelineServer:
             device=cfg["stt"].get("device", "cpu"),
             compute_type=cfg["stt"].get("compute_type", "int8"),
             sample_rate=int(cfg["stt"].get("sample_rate", 16000)),
-            language="en",
+            language=cfg["stt"].get("language", "en"),
             beam_size=1,
             faster_whisper_vad_filter=False,
             no_log_file=True,
@@ -646,6 +646,12 @@ def get_pipeline() -> VoicePipelineServer:
 
 
 app = FastAPI(title="Hermes Voice Pipeline")
+
+
+@app.get("/health", include_in_schema=False)
+async def health() -> JSONResponse:
+    """Lightweight liveness probe that does not initialize the STT pipeline."""
+    return JSONResponse({"status": "ok", "service": "jarvis-voice"})
 
 
 @app.on_event("startup")

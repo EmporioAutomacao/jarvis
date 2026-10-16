@@ -1,0 +1,24 @@
+services:
+  jarvis:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+    container_name: jarvis-voice
+    restart: unless-stopped
+    init: true
+    env_file:
+      - ${JARVIS_ENV_FILE:-/opt/data/jarvis/.env}
+    environment:
+      PYTHONUNBUFFERED: "1"
+    ports:
+      - "8765:8765"
+    volumes:
+      - ${JARVIS_CONFIG_DIR:-/opt/data/jarvis/config}/server.yaml:/app/config/server.yaml:ro
+      - ${JARVIS_DATA_DIR:-/opt/data/jarvis/data}/logs:/app/logs
+      - ${JARVIS_CERTS_DIR:-/opt/data/jarvis/certs}:/app/certs:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8765/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 90s
+      retries: 3

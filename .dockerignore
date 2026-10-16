@@ -1,0 +1,42 @@
+# Repositório e metadados de desenvolvimento
+.git
+.gitignore
+.github
+.vscode
+.idea
+
+# Ambientes Python locais (não copiar para a imagem)
+**/.venv/
+**/venv/
+**/.venv.*
+**/__pycache__/
+**/*.py[cod]
+**/.pytest_cache/
+**/.mypy_cache/
+**/.ruff_cache/
+
+# Artefatos gerados, caches e logs
+**/logs/
+**/*.log
+**/.cache/
+**/dist/
+**/build/
+**/*.egg-info/
+
+# Dados locais e material sensível; a imagem usa arquivos example
+**/certs/
+**/*.pem
+**/*.key
+**/*.crt
+server/config/server.yaml
+
+# Dependências e artefatos de front-end locais
+**/node_modules/
+**/.next/
+**/coverage/
+
+# Arquivos locais do sistema/editor
+.DS_Store
+Thumbs.db
+*.swp
+*.swo

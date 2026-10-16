@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+requests
+pyyaml
+numpy
+anthropic
+RealtimeSTT
+faster-whisper
+silero-vad
+websockets
+psutil

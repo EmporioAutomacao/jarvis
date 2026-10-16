@@ -44,10 +44,13 @@ For the HUD's quota bar, give the key the **User → Read** permission.
 ```bash
 cd server
 python3 -m venv .venv
-.venv/bin/pip install fastapi uvicorn requests pyyaml numpy anthropic \
-    RealtimeSTT faster-whisper silero-vad websockets psutil
+env -u PYTHONPATH uv pip install --python .venv/bin/python -r requirements.txt
 cp config/server.example.yaml config/server.yaml
 ```
+
+Use `env -u PYTHONPATH` for installation and execution on hosts that inject a
+global Python path. Otherwise a host-level NumPy build can shadow the virtual
+environment and produce a `cpython-313`/`cpython-311` binary mismatch.
 
 Note: `faster-whisper` and `silero-vad` are REQUIRED — recent RealtimeSTT
 releases treat them as optional extras and fail at runtime without them
@@ -99,7 +102,14 @@ scripts/make-boot-audio.sh YourFirstName
 Wait ~40 s for the STT model to warm, then open `https://YOUR_HOST/hud/`.
 Run `scripts/jarvis-health.sh` to check all five services.
 
-## 4. Auto-start on boot (macOS)
+## 4. Docker/Linux (Portainer)
+
+Para executar o backend em Linux/Docker sem `launchctl`, use a stack
+`deploy/docker/compose.portainer.yml` e siga `docs/DOCKER_PORTAINER.md`. Ela
+publica somente `8765`, usa `GET /health` para healthcheck e reinicia o
+container com `restart: unless-stopped`.
+
+## 5. Auto-start on boot (macOS)
 
 Copy the two plists from `launchd/`, edit the `/PATH/TO` and `YOUR_USER`
 placeholders, then:

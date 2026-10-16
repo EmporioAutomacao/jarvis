@@ -1,0 +1,19 @@
+[Unit]
+Description=Jarvis Empório voice and HUD server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=hermes
+Group=hermes
+WorkingDirectory=/opt/data/projects/jarvis_ai/server
+EnvironmentFile=-/opt/data/.env
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/opt/data/projects/jarvis_ai/server/.venv/bin/python /opt/data/projects/jarvis_ai/server/server.py
+Restart=on-failure
+RestartSec=5
+LimitNOFILE=8192
+
+[Install]
+WantedBy=multi-user.target

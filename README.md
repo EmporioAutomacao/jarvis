@@ -95,8 +95,8 @@ EOF
 hermes gateway   # or set up its LaunchAgent / service
 
 # 2. This repo
-git clone https://github.com/YOURNAME/jarvis-hermes-hud
-cd jarvis-hermes-hud/server
+git clone https://github.com/EmporioAutomacao/jarvis
+cd jarvis/server
 python3 -m venv .venv
 .venv/bin/pip install fastapi uvicorn requests pyyaml numpy anthropic \
     RealtimeSTT faster-whisper silero-vad websockets psutil
